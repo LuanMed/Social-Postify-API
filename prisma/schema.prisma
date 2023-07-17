@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -17,33 +14,22 @@ model User {
   password    String        @db.VarChar(255)
   avatar      String        @db.Text()
   createdAt   DateTime      @default(now())
-  Session     Session[]
   Publication Publication[]
 
   @@map(name: "user")
 }
 
-model Session {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  token     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map(name: "session")
-}
-
 model Publication {
-  id            Int     @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   userId        Int
-  User          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  image         String  @db.Text()
-  title         String  @db.VarChar(255)
-  text          String  @db.Text()
-  dateToPublish String  @db.Text()
-  published     Boolean @default(false)
-  socialMedia   String  @db.Text()
+  User          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  image         String   @db.Text()
+  title         String   @unique @db.VarChar(255)
+  text          String   @db.Text()
+  dateToPublish String   @db.Text()
+  published     Boolean  @default(false)
+  socialMedia   String   @db.Text()
+  createdAt     DateTime @default(now())
 
   @@map(name: "publication")
 }

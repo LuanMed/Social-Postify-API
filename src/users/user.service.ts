@@ -26,4 +26,10 @@ export class UsersService {
   async findAllUsers() {
     return await this.usersRepository.findAllUsers();
   }
+
+  async findUserById(id: number) {
+    const user = await this.usersRepository.findUserById(id);
+    if (!user) throw new NotFoundException('User not found');
+    return user;
+  }
 }
